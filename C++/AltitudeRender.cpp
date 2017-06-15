@@ -55,7 +55,12 @@ int main(int argc, char** argv) {
 	}
 
 	double time = omp_get_wtime();
-	std::string folder = "./Result";
+	/*std::string folder = "./Result";
+
+	boost::filesystem::path Dir(folder);
+	boost::filesystem::create_directories(Dir);*/
+
+	std::string  folder = "./Result/Altitude";
 
 	boost::filesystem::path Dir(folder);
 	boost::filesystem::create_directories(Dir);
@@ -81,10 +86,10 @@ int main(int argc, char** argv) {
 	for (int c = 0; c < cameras.size(); c++) {
 		cv::Mat altitude;
 		dr.renderAltitude(cameras[c], altitude);
+		cv::imwrite(folder + "/" + cameras[c].filename.substr(0, cameras[c].filename.length() - 4) + ".png", altitude);
+		//std::ofstream outputAltitude(folder + "/" + cameras[c].filename.substr(0,cameras[c].filename.length() - 4) + ".txt");
 
-		std::ofstream outputAltitude(folder + "/" + cameras[c].filename.substr(0,cameras[c].filename.length() - 4) + ".txt");
-
-		outputAltitude << altitude;
+		//outputAltitude << altitude;
 	}
 
 	std::system("pause");

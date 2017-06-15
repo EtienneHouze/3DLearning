@@ -57,7 +57,7 @@ int main(int argc, char** argv) {
 	}
 
 	double time = omp_get_wtime();
-	std::string folder = "./Result";
+	std::string folder = "./Result/RGB";
 
 	boost::filesystem::path Dir(folder);
 	boost::filesystem::create_directories(Dir);
