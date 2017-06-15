@@ -44,14 +44,16 @@ def main():
         print(msg)
         print("try -h or --help")
         sys.exit(-1)
-    if len(args) != 3:
-        print("try -h or --help")
-        sys.exit(-1)
 
     for o, a in opts:
         if o in ['-h', '--help']:
             print(__doc__)
             sys.exit(2)
+
+    if len(args) != 3:
+        print("try -h or --help")
+        sys.exit(-1)
+
 
     in_folder = args[0]
     out_folder = args[1]

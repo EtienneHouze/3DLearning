@@ -7,10 +7,18 @@ import sys
 import numpy as np
 from PIL import Image
 from statistics import mode
-
+# TODO : tester cette classe pour voir si les méthodes marchent bien comme il faut...
 class Mesh:
+    """
+    Une classe définissant un mesh, décrit simplement comme un nuage de points.
+    """
 
     def __init__(self, obj):
+        """
+        Initialise le mesh en chargeant le nuage de points depuis le fichier .obj spécifié.
+        Args:
+            obj (string): fichier .obj décrivant le mesh
+        """
         self.verts = []
         self.numpoints = 0
         self.labels = []
@@ -54,7 +62,6 @@ class Mesh:
 
 
     def labelise(self,projection_file,lab_dir):
-        # TODO : essayer de voir comment faire cette éthode raisonnablement bien...
         """
         Méthode qui attribue a chaque point du mesh son étiquette, selon le jeu d'images dont les projections sont définies dans projection_file
         Args:
@@ -79,7 +86,6 @@ class Mesh:
                     images.append(np.asarray(im,dtype='uint8'))
                     print("image loaded")
                 else:
-                    # TODO
                     labels = []
                     num_images = len(splt)//3
                     for i in range(num_images):
@@ -91,4 +97,27 @@ class Mesh:
                     self.verts[point_index].label = lab
                     point_index += 1
 
+    def save_to_txt(self, file):
+        with open(file,mode='w') as f:
+            f.write(str(self.numpoints)+'\n')
+            for point in self.verts:
+                f.write(point)
+                f.write('\n')
 
+    def load_from_txt(self, file):
+        """
+        Loads a mesh from a txt file
+        Args:
+            file (string): txt file
+
+        Returns:
+            Met à jour le champ verts du mesh.
+        """
+        with fileinput.input((file)) as f:
+            for line in f:
+                splt = line.split(sep=' ')
+                if len(splt) != 4:
+                    pass
+                else:
+                    self.verts.append(Point(*splt))
+            self.numpoints = len(self.verts)
