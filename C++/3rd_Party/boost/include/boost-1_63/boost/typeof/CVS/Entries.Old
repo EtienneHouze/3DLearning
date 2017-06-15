@@ -1,0 +1,28 @@
+D/dmc////
+D/msvc////
+D/std////
+/encode_decode.hpp/1.1/Mon Feb  6 10:03:51 2017/-kkv/Tv1_4_3
+/encode_decode_params.hpp/1.1/Mon Feb  6 10:03:51 2017/-kkv/Tv1_4_3
+/incr_registration_group.hpp/1.1/Mon Feb  6 10:03:51 2017/-kkv/Tv1_4_3
+/int_encoding.hpp/1.1/Mon Feb  6 10:03:51 2017/-kkv/Tv1_4_3
+/integral_template_param.hpp/1.1/Mon Feb  6 10:03:51 2017/-kkv/Tv1_4_3
+/message.hpp/1.1/Mon Feb  6 10:03:51 2017/-kkv/Tv1_4_3
+/modifiers.hpp/1.1/Mon Feb  6 10:03:51 2017/-kkv/Tv1_4_3
+/native.hpp/1.1/Mon Feb  6 10:03:51 2017/-kkv/Tv1_4_3
+/pointers_data_members.hpp/1.1/Mon Feb  6 10:03:51 2017/-kkv/Tv1_4_3
+/register_functions.hpp/1.1/Mon Feb  6 10:03:51 2017/-kkv/Tv1_4_3
+/register_functions_iterate.hpp/1.1/Mon Feb  6 10:03:51 2017/-kkv/Tv1_4_3
+/register_fundamental.hpp/1.1/Mon Feb  6 10:03:51 2017/-kkv/Tv1_4_3
+/register_mem_functions.hpp/1.1/Mon Feb  6 10:03:51 2017/-kkv/Tv1_4_3
+/template_encoding.hpp/1.1/Mon Feb  6 10:03:51 2017/-kkv/Tv1_4_3
+/template_template_param.hpp/1.1/Mon Feb  6 10:03:51 2017/-kkv/Tv1_4_3
+/type_encoding.hpp/1.1/Mon Feb  6 10:03:51 2017/-kkv/Tv1_4_3
+/type_template_param.hpp/1.1/Mon Feb  6 10:03:51 2017/-kkv/Tv1_4_3
+/typeof.hpp/1.1/Mon Feb  6 10:03:51 2017/-kkv/Tv1_4_3
+/typeof_impl.hpp/1.1/Mon Feb  6 10:03:51 2017/-kkv/Tv1_4_3
+/unsupported.hpp/1.1/Mon Feb  6 10:03:51 2017/-kkv/Tv1_4_3
+/vector.hpp/1.1/Mon Feb  6 10:03:51 2017/-kkv/Tv1_4_3
+/vector100.hpp/1.1/Mon Feb  6 10:03:51 2017/-kkv/Tv1_4_3
+/vector150.hpp/1.1/Mon Feb  6 10:03:51 2017/-kkv/Tv1_4_3
+/vector200.hpp/1.1/Mon Feb  6 10:03:51 2017/-kkv/Tv1_4_3
+/vector50.hpp/1.1/Mon Feb  6 10:03:51 2017/-kkv/Tv1_4_3

@@ -1,0 +1,22 @@
+D/detail////
+/connection.hpp/1.1/Mon Feb  6 10:03:39 2017/-kkv/Tv1_4_3
+/deconstruct.hpp/1.1/Mon Feb  6 10:03:39 2017/-kkv/Tv1_4_3
+/deconstruct_ptr.hpp/1.1/Mon Feb  6 10:03:39 2017/-kkv/Tv1_4_3
+/dummy_mutex.hpp/1.1/Mon Feb  6 10:03:39 2017/-kkv/Tv1_4_3
+/expired_slot.hpp/1.1/Mon Feb  6 10:03:39 2017/-kkv/Tv1_4_3
+/last_value.hpp/1.1/Mon Feb  6 10:03:39 2017/-kkv/Tv1_4_3
+/mutex.hpp/1.1/Mon Feb  6 10:03:39 2017/-kkv/Tv1_4_3
+/optional_last_value.hpp/1.1/Mon Feb  6 10:03:39 2017/-kkv/Tv1_4_3
+/postconstructible.hpp/1.1/Mon Feb  6 10:03:39 2017/-kkv/Tv1_4_3
+/predestructible.hpp/1.1/Mon Feb  6 10:03:39 2017/-kkv/Tv1_4_3
+/preprocessed_signal.hpp/1.1/Mon Feb  6 10:03:39 2017/-kkv/Tv1_4_3
+/preprocessed_slot.hpp/1.1/Mon Feb  6 10:03:39 2017/-kkv/Tv1_4_3
+/shared_connection_block.hpp/1.1/Mon Feb  6 10:03:39 2017/-kkv/Tv1_4_3
+/signal.hpp/1.1/Mon Feb  6 10:03:39 2017/-kkv/Tv1_4_3
+/signal_base.hpp/1.1/Mon Feb  6 10:03:39 2017/-kkv/Tv1_4_3
+/signal_type.hpp/1.1/Mon Feb  6 10:03:39 2017/-kkv/Tv1_4_3
+/slot.hpp/1.1/Mon Feb  6 10:03:39 2017/-kkv/Tv1_4_3
+/slot_base.hpp/1.1/Mon Feb  6 10:03:39 2017/-kkv/Tv1_4_3
+/trackable.hpp/1.1/Mon Feb  6 10:03:39 2017/-kkv/Tv1_4_3
+/variadic_signal.hpp/1.1/Mon Feb  6 10:03:39 2017/-kkv/Tv1_4_3
+/variadic_slot.hpp/1.1/Mon Feb  6 10:03:39 2017/-kkv/Tv1_4_3

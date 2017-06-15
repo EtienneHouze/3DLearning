@@ -1,0 +1,1 @@
+All third parties are compiled with Visual Studio 2013 64-bit.
