@@ -1,3 +1,6 @@
+# Liste perso
+C++/Result/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -371,3 +374,16 @@ __pycache__/
 # tools/**
 # !tools/packages.config
 
+
+C\+\+/Result/
+/README.md
+
+C\+\+/CMakeFiles/
+
+*.vcxproj
+
+*.cmake
+
+*.filters
+
+*.sln

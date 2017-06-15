@@ -79,7 +79,7 @@ def main():
                 im_array = np.asarray(im)
                 lab_array = np.apply_along_axis(lambda a: aux(a, labels), axis=-1, arr=im_array)
                 lab = Image.fromarray(lab_array[:, :, 0])
-                lab.save(join(out_folder, 'lab_' + file))
+                lab.save(join(out_folder, file))
                 print("Image " + file + " processed.")
 
 

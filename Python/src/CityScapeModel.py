@@ -337,6 +337,81 @@ class CityScapeModel:
             self.save_net(weights_only=True)
         print('done')
 
+    def train_3D(self, epochs, batch_size, save=True):
+        """
+            Trains the neural network according to the values passed as arguments.
+            Args:
+                epochs (int): number of epochs to train on.
+                batch_size (int): size of the batch to use.
+                save (bool):  whether to save the model at the end of training or not.
+
+            Returns:
+
+        """
+
+        # First, we compile the model
+        print('compiling')
+        self.compile()
+        # We the build the callback functions, distinguishes cases between built-in callbacks and custom callbacks.
+        print("Building Callback functions...")
+        call_list = []
+        for call_def in self.prop_dict['callbacks']:
+            if call_def[0] == 'tensorboard':
+                call = keras.callbacks.TensorBoard(
+                        log_dir=os.path.join(self.prop_dict['directory'], 'logs', self.prop_dict['name']),
+                        histogram_freq=1,
+                        write_graph=True
+                )
+            elif call_def[0] == 'csv':
+                call = keras.callbacks.CSVLogger(
+                        filename=os.path.join(self.prop_dict['directory'], 'logs', self.prop_dict['name'] + '.csv'),
+                        separator=',',
+                        append=True
+                )
+            elif call_def[0] == 'ckpt':
+                call = keras.callbacks.ModelCheckpoint(
+                        filepath=os.path.join(self.prop_dict['directory'], 'saves', self.prop_dict['name']),
+                        verbose=2,
+                        save_weights_only=True
+                )
+            else:
+                call = callbacks.callbacks_dict[call_def[0]](self,
+                                                             options=call_def[1]
+                                                             )
+            call_list.append(call)
+        batch_gen = BatchGenerator(traindir=self.prop_dict['trainset'][1],
+                                   city_model=self,
+                                   trainsetsize=self.prop_dict['trainset'][2],
+                                   batchsize=batch_size)
+        if len(self.prop_dict['valset']) > 0:
+            val_gen = BatchGenerator(traindir=self.prop_dict['valset'][1],
+                                     city_model=self,
+                                     trainsetsize=self.prop_dict['valset'][2],
+                                     batchsize=batch_size,
+                                     traindirsize=100)
+            self.model.fit_generator(generator=batch_gen.generate_batch_for_3D(),
+                                     steps_per_epoch=batch_gen.epoch_size//10,
+                                     epochs=epochs*10,
+                                     verbose=2,
+                                     callbacks=call_list,
+                                     validation_data=val_gen.generate_batch_for_3D(),
+                                     validation_steps=20
+                                     )
+        else:
+            self.model.fit_generator(generator=batch_gen.generate_batch_for_3D(),
+                                     steps_per_epoch=batch_gen.epoch_size//10,
+                                     epochs=epochs*10,
+                                     verbose=2,
+                                     callbacks=call_list
+                                     )
+
+        if (save):
+            print('Saving model')
+            self.save_tojson()
+            self.save_net()
+            self.save_net(weights_only=True)
+        print('done')
+
     def compute_output(self, x):
         """
         Computes the output of the net on a single input x.

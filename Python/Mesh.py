@@ -65,7 +65,6 @@ class Mesh:
         """
         if not isfile(projection_file):
             pass
-        num_textures = 0
         images = []
         with fileinput.input((projection_file),mode='r') as proj:
             point_index = 0
@@ -74,7 +73,7 @@ class Mesh:
                     break
                 splt = line.split(sep=' ')
                 if len(splt)==1:
-                    num_textures = int(splt[0])
+                    pass
                 elif len(splt) == 2:
                     im = Image.open(join(lab_dir,splt[0]))
                     images.append(np.asarray(im,dtype='uint8'))
@@ -85,8 +84,8 @@ class Mesh:
                     num_images = len(splt)//3
                     for i in range(num_images):
                         im_index = int(splt[3*i])
-                        x_coord = np.floor(float(splt[3*i+1]))
-                        y_coord = np.floor(float(splt[3*i+2]))
+                        x_coord = np.floor(float(splt[3*i + 1]))
+                        y_coord = np.floor(float(splt[3*i + 2]))
                         labels.append(images[im_index][x_coord,y_coord])
                     lab = mode(labels)
                     self.verts[point_index].label = lab
