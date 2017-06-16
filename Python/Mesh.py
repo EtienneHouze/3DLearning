@@ -82,7 +82,7 @@ class Mesh:
                 if len(splt)==1:
                     pass
                 elif len(splt) == 2:
-                    im = Image.open(join(lab_dir,splt[0]))
+                    im = Image.open(join(lab_dir,splt[0].replace('JPG','png')))
                     images.append(np.asarray(im,dtype='uint8'))
                     print("image loaded")
                 else:
@@ -90,18 +90,19 @@ class Mesh:
                     num_images = len(splt)//3
                     for i in range(num_images):
                         im_index = int(splt[3*i])
-                        x_coord = np.floor(float(splt[3*i + 1]))
-                        y_coord = np.floor(float(splt[3*i + 2]))
+                        x_coord = int(np.floor(float(splt[3*i + 1])))
+                        y_coord = int(np.floor(float(splt[3*i + 2])))
                         labels.append(images[im_index][x_coord,y_coord])
-                    lab = mode(labels)
+                    lab = max(set(labels), key=labels.count)
                     self.verts[point_index].label = lab
+                    print("point "+str(point_index) + " processed")
                     point_index += 1
 
     def save_to_txt(self, file):
         with open(file,mode='w') as f:
             f.write(str(self.numpoints)+'\n')
             for point in self.verts:
-                f.write(point)
+                f.write(str(point))
                 f.write('\n')
 
     def load_from_txt(self, file):

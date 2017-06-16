@@ -1,5 +1,5 @@
 import random
-from os import walk
+from os import walk, listdir
 from os.path import join, basename, isfile, normpath
 
 import helpers.labels as labels
@@ -283,6 +283,21 @@ def append_labels(pointsfile, labelsfile, outfile):
         lf.close()
         pf.close()
 
+
+def dir_size(folder):
+    """
+    Counts the number of files in a fodler
+    Args:
+        folder (string): path to the folder
+
+    Returns:
+        length (int) : number of files in the folder.
+    """
+    length = 0
+    for name in listdir(folder):
+        if isfile(join(folder,name)):
+            length += 1
+    return length
 
 #Dictionnary linking function names to the actual funcitons
 set_builders = {

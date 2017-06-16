@@ -12,6 +12,7 @@ from keras.utils import plot_model
 import keras.backend as K
 
 from helpers.BatchGenerator import BatchGenerator
+from helpers.preprocess import dir_size
 from src import callbacks, Metrics
 from src import models
 from helpers.Values import weights_dict
@@ -382,13 +383,15 @@ class CityScapeModel:
         batch_gen = BatchGenerator(traindir=self.prop_dict['trainset'][1],
                                    city_model=self,
                                    trainsetsize=self.prop_dict['trainset'][2],
-                                   batchsize=batch_size)
+                                   batchsize=batch_size,
+                                   traindirsize=dir_size(os.path.join(self.prop_dict['trainset'][1],'RGB'))
+                                   )
         if len(self.prop_dict['valset']) > 0:
             val_gen = BatchGenerator(traindir=self.prop_dict['valset'][1],
                                      city_model=self,
                                      trainsetsize=self.prop_dict['valset'][2],
                                      batchsize=batch_size,
-                                     traindirsize=100)
+                                     traindirsize=dir_size(os.path.join(self.prop_dict['valset'][1],'RGB')))
             self.model.fit_generator(generator=batch_gen.generate_batch_for_3D(),
                                      steps_per_epoch=batch_gen.epoch_size//10,
                                      epochs=epochs*10,

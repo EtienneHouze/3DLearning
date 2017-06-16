@@ -11,4 +11,5 @@ Le code Python a été rédigé au cours du stage. Il exploite l'API Keras en ve
 Sont aussi requis les packages numpy, pandas, pillow, cython
 
 ## How to use
-Le dossier Python/scripts
+- Le dossier Python/scripts contient différents scripts Python qui exécutent les différentes tâches du processus d'apprentissage et d'évaluation d'un modèle.
+- Le dossier C++ contient différents scripts qui permettent de générer un dataset à partir d'un mesh donné sous format .obj.

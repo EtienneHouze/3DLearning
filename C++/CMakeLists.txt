@@ -37,6 +37,15 @@ target_link_libraries(AltitudeRender
 	"${CMAKE_CURRENT_SOURCE_DIR}/3rd_Party/FreeGLUT/lib/x64/freeglut.lib"
 	)
 
+add_executable(DepthRender DepthRender.cpp ${SOURCES})
+target_link_libraries(DepthRender
+	${OpenCV_LIBS} 
+	${CGAL_LIBRARIES} 
+	${OPENGL_LIBRARIES} 
+	"${CMAKE_CURRENT_SOURCE_DIR}/3rd_Party/GLEW/lib/Release/x64/glew32.lib"
+	"${CMAKE_CURRENT_SOURCE_DIR}/3rd_Party/FreeGLUT/lib/x64/freeglut.lib"
+	)
+
 add_executable(PointProjection PointProjection.cpp ${SOURCES})
 target_link_libraries(PointProjection
 	${OpenCV_LIBS} 

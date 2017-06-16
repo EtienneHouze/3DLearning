@@ -1,6 +1,6 @@
 """This script launches an automatic procedure for training a neural network.
 The syntax of the command is :
-    <network> <folder_path> <training_folder> <vazlidation_folder> <training_type> <height> <width> <depth> <num_classes>
+    <network> <folder_path> <training_folder> <validation_folder> <training_type> <height> <width> <depth> <num_classes>
         network : name of the net building function. See src.models.
         folder_path : specifies the folder in which to store the model
         training_folder : path to the training folder

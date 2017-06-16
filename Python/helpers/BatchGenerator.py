@@ -5,6 +5,7 @@ from os import listdir
 
 import numpy as np
 from PIL import Image
+from helpers.preprocess import dir_size
 """
     A class to define a batch generator used in training to avoid manipulationg huge np arrays.
 """
@@ -195,10 +196,10 @@ class BatchGenerator:
 
     def generate_batch_for_3D(self):
 
-        self.lab_dir = join(self.traindir,'labs')
-        self.rgb_dir = join(self.traindir,'rgb')
-        self.alt_dir = join(self.traindir,'alt')
-        self.depth_dir = join(self.traindir,'depth')
+        self.lab_dir = join(self.traindir,'Labels')
+        self.rgb_dir = join(self.traindir,'RGB')
+        self.alt_dir = join(self.traindir,'Altitude')
+        self.depth_dir = join(self.traindir,'Depth')
 
         self.name_list = listdir(self.rgb_dir)
 
@@ -209,10 +210,10 @@ class BatchGenerator:
             if (i == 0):
                 np.random.shuffle(self.indices)
             for k in self.indices[self.batchsize * i: (i * self.batchsize) + self.batchsize]:
-                rgb = Image.open(self.rgb_dir,self.name_list[k])
-                lab = Image.open(self.lab_dir,self.name_list[k])
-                depth = Image.open(self.depth_dir, self.name_list[k])
-                alt = Image.open(self.alt_dir,self.name_list[k])
+                rgb = Image.open(join(self.rgb_dir,self.name_list[k]))
+                lab = Image.open(join(self.lab_dir,self.name_list[k]))
+                depth = Image.open(join(self.depth_dir, self.name_list[k]))
+                alt = Image.open(join(self.alt_dir,self.name_list[k]))
                 rgb_array = np.asarray(rgb)
                 lab_array = np.asarray(lab)
                 # maxlabs = self.city_model.prop_dict['num_labs'] * np.ones_like(lab_array)
