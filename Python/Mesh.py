@@ -122,3 +122,29 @@ class Mesh:
                 else:
                     self.verts.append(Point(*splt))
             self.numpoints = len(self.verts)
+
+    def save_to_ptx(self, file, label_file):
+        labels_dict = {0:[0, 0, 0]}
+        with fileinput.input((label_file)) as f:
+            for line in f:
+                splt = line.split(sep=' ')
+                if splt[0]=='#':
+                    pass
+                else:
+                    r = int(splt[0])
+                    g = int(splt[1])
+                    b = int(splt[2])
+                    l = int(splt[3])
+                    labels_dict[l] = [r,g,b]
+
+        with open(file, mode='w') as f:
+            header = "1"+"\n"+str(len(self.verts))+"\n"+"0 0 0\n"+"1 0 0\n"+"0 1 0\n"+"0 0 1\n"+"1 0 0 0\n"+"0 1 0 0\n"+"0 0 1 0\n"+"0 0 0 1\n"
+            f.write(header)
+            for vert in self.verts:
+                line = str(vert.x)+" "+str(vert.y)+" "+str(vert.z)+" 0 "
+                for i in labels_dict[vert.label]:
+                    line += (str(i)+" ")
+                line += (str(vert.label)+"\n")
+                f.write(line)
+
+

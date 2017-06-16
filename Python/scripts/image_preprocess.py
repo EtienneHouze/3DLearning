@@ -1,7 +1,8 @@
 """
 Petit script pour transformer les images étiquetées RGB en images ne contenant plus que les étiquettes.
 Attribue la valeur 0 aux zones non étiquetées.
-Synthaxe : <in_folder> <out_folder> <labels>
+Syntaxe :
+    <in_folder> <out_folder> <labels>
         in_folder : dossier contentant les images.
         out_folder : dossier de sortie.
         labels : fichier contenant les correspondances couleur->étiquettes
