@@ -119,16 +119,17 @@ class ViewOutput_3D(Callback):
                                       trainsetsize=self.citymodel.prop_dict['valset'][2],
                                       batchsize=self.num_ins,
                                       traindirsize=self.citymodel.prop_dict['valset'][2])
-            self.x, _ = next(self.gen.generate_batch_for_3D())
+            self.x, _ = next(self.gen.generate_batch_for_3D(self.citymodel.prop_dict['constraints']))
         else:
             self.gen = BatchGenerator(traindir=self.citymodel.prop_dict['trainset'][1],
                                       city_model=self.citymodel,
                                       trainsetsize=self.citymodel.prop_dict['trainset'][2],
                                       batchsize=self.num_ins)
-            self.x, _ = next(self.gen.generate_batch_for_3D())
+            self.x, _ = next(self.gen.generate_batch_for_3D(self.citymodel.prop_dict['constraints']))
         for i in range(self.num_ins):
             bob = self.x[i, :, :, :]
-            bob = bob[:, :, 0:3].astype(np.uint8)
+            bob = bob[:, :, 0:3].astype('uint8')
+            bob = np.squeeze(bob)
             Input = Image.fromarray(bob)
             Input.save(join(self.citymodel.prop_dict['directory'], 'watch', self.citymodel.prop_dict['name'] + str(i) + '_input.png'))
 

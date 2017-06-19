@@ -73,7 +73,8 @@ class CityScapeModel:
                               'trainset': [],
                               'valset': [],
                               'callbacks': [],
-                              'learning_rate': 0.001
+                              'learning_rate': 0.001,
+                              'constraints':{}
                               }
             # Saving default in a file
             with open(os.path.join(dir, 'properties.json'), 'w') as outfile:
@@ -90,6 +91,10 @@ class CityScapeModel:
     # ==============================================================================
     # Setters
     # ==============================================================================
+
+    def define_constraints(self,cons):
+        self.prop_dict['constraints'] = cons
+
     def define_learning_rate(self, lr):
         self.prop_dict['learning_rate'] = lr
 
@@ -392,18 +397,18 @@ class CityScapeModel:
                                      trainsetsize=self.prop_dict['valset'][2],
                                      batchsize=batch_size,
                                      traindirsize=dir_size(os.path.join(self.prop_dict['valset'][1],'RGB')))
-            self.model.fit_generator(generator=batch_gen.generate_batch_for_3D(),
+            self.model.fit_generator(generator=batch_gen.generate_batch_for_3D(self.prop_dict['constraints']),
                                      steps_per_epoch=batch_gen.epoch_size,
-                                     epochs=epochs*10,
+                                     epochs=epochs,
                                      verbose=2,
                                      callbacks=call_list,
-                                     validation_data=val_gen.generate_batch_for_3D(),
+                                     validation_data=val_gen.generate_batch_for_3D(self.prop_dict['constraints']),
                                      validation_steps=20
                                      )
         else:
-            self.model.fit_generator(generator=batch_gen.generate_batch_for_3D(),
+            self.model.fit_generator(generator=batch_gen.generate_batch_for_3D(self.prop_dict['constraints']),
                                      steps_per_epoch=batch_gen.epoch_size,
-                                     epochs=epochs*10,
+                                     epochs=epochs,
                                      verbose=2,
                                      callbacks=call_list
                                      )

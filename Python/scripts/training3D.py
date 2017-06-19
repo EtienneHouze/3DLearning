@@ -18,22 +18,25 @@ Options :
     -r ou --rate <taux> : définit le taux d'apprentissage spécifié. Par défaut à 1e-4
     -h ou --height <hauteur> : définit la hauteur des images.
     -w ou --width <largeur> : définit la largeur des images.
+    --rgb_only : n'utilise que le rgb
+    --z_only : n'utilise que le z
+    --depth_only : n'utilise que la profondeur
+    --no_rgb : n'utilise pas le canal rgb
 """
 
 from __future__ import absolute_import, division, print_function
 
-
 import getopt
 import sys
 from os import listdir
-from os.path import join, isfile, isdir
-from os import mkdir
+from os.path import join, isfile
 
 from src.CityScapeModel import CityScapeModel
 
+
 def main():
     try:
-        opts, args = getopt.gnu_getopt(sys.argv[1:],'he:b:f:l:r:',['help','epochs=','batch=','freeze=','load=','rate='])
+        opts, args = getopt.gnu_getopt(sys.argv[1:],'he:b:f:l:r:',['help','epochs=','batch=','freeze=','load=','rate=','no_rgb','z_only','depth_only','rgb_only'])
     except getopt.error as msg:
         print(msg)
         print("Try -h or --help  for help")
@@ -47,6 +50,8 @@ def main():
     freeze_name = []
     im_h = 256
     im_w = 256
+    in_channels = 5
+    no_rgb, rgb_only, z_only, depth_only = False, False, False, False
 
     for o, a in opts:
         if o in ['-h','--help']:
@@ -68,6 +73,18 @@ def main():
             im_h = int(a)
         if o in ['-w','--width']:
             im_w = int(a)
+        if o == '--z_only':
+            z_only = True
+            in_channels = 1
+        if o == '--no_rgb':
+            no_rgb = True
+            in_channels = 2
+        if o == '--rgb_only':
+            rgb_only = True
+            in_channels = 3
+        if o == '--depth_only':
+            depth_only = True
+            in_channels = 1
 
     model_name = args[0]
     root_folder = args[1]
@@ -78,8 +95,13 @@ def main():
         val_folder = args[4]
 
     model = CityScapeModel(root_folder)
-
-    model.define_input((im_h,im_w,5))
+    model.define_constraints({
+        'rgb_only': rgb_only,
+        'no_rgb': no_rgb,
+        'z_only': z_only,
+        'depth_only': depth_only
+    })
+    model.define_input((im_h,im_w,in_channels))
     model.define_numlabs(num_classes)
     model.define_network(model_name)
 

@@ -1,8 +1,5 @@
-from __future__ import absolute_import,division,print_function
+from __future__ import absolute_import, division, print_function
 
-from Mesh import Mesh
-from PIL import Image
-import numpy as np
 from helpers.visualization import convert_labelled_output
 
 # test = Mesh('R:/Projects/Nashville/Nash/Productions/Etienne_simpler/Data/Model/Model.obj')

@@ -30,6 +30,7 @@ class BatchGenerator:
         self.batchsize = batchsize
         self.city_model = city_model
         self.epoch_size = trainsetsize // self.batchsize
+        self.name_list = []
 
     def generate_batch(self, option = ''):
         """
@@ -194,7 +195,7 @@ class BatchGenerator:
         else:
             print("Invalid option !")
 
-    def generate_batch_for_3D(self):
+    def generate_batch_for_3D(self, constraints):
 
         self.lab_dir = join(self.traindir,'Labels')
         self.rgb_dir = join(self.traindir,'RGB')
@@ -203,26 +204,127 @@ class BatchGenerator:
 
         self.name_list = listdir(self.rgb_dir)
 
-        while self.i > -1:
-            i = self.i % self.epoch_size
-            ins_list = []
-            labs_list = []
-            if (i == 0):
-                np.random.shuffle(self.indices)
-            for k in self.indices[self.batchsize * i: (i * self.batchsize) + self.batchsize]:
-                rgb = Image.open(join(self.rgb_dir,self.name_list[k]))
-                lab = Image.open(join(self.lab_dir,self.name_list[k]))
-                depth = Image.open(join(self.depth_dir, self.name_list[k]))
-                alt = Image.open(join(self.alt_dir,self.name_list[k]))
-                rgb_array = np.asarray(rgb)
-                lab_array = np.asarray(lab)
-                # maxlabs = self.city_model.prop_dict['num_labs'] * np.ones_like(lab_array)
-                lab_array = np.eye(self.city_model.prop_dict['num_labs']+1)[lab_array]
-                labs_list.append(lab_array)
-                depth_array = np.asarray(depth)
-                depth_array = np.expand_dims(depth_array,axis=2)
-                alt_array = np.asarray(alt)
-                alt_array = np.expand_dims(alt_array,axis=2)
-                ins_list.append(np.concatenate((rgb_array,depth_array,alt_array),axis=-1))
-            self.i += 1
-            yield (np.asarray(ins_list), np.asarray(labs_list))
+        if constraints.get('z_only') :
+            while self.i > -1:
+                i = self.i % self.epoch_size
+                ins_list = []
+                labs_list = []
+                if (i == 0):
+                    np.random.shuffle(self.indices)
+                for k in self.indices[self.batchsize * i: (i * self.batchsize) + self.batchsize]:
+                    # rgb = Image.open(join(self.rgb_dir, self.name_list[k]))
+                    lab = Image.open(join(self.lab_dir, self.name_list[k]))
+                    # depth = Image.open(join(self.depth_dir, self.name_list[k]))
+                    alt = Image.open(join(self.alt_dir, self.name_list[k]))
+                    # rgb_array = np.asarray(rgb)
+                    lab_array = np.asarray(lab)
+                    # maxlabs = self.city_model.prop_dict['num_labs'] * np.ones_like(lab_array)
+                    lab_array = np.eye(self.city_model.prop_dict['num_labs'] + 1)[lab_array]
+                    labs_list.append(lab_array)
+                    # depth_array = np.asarray(depth)
+                    # depth_array = np.expand_dims(depth_array, axis=2)
+                    alt_array = np.asarray(alt)
+                    alt_array = np.expand_dims(alt_array, axis=2)
+                    ins_list.append(alt_array)
+                self.i += 1
+                yield (np.asarray(ins_list), np.asarray(labs_list))
+
+        elif constraints.get('depth_only'):
+            while self.i > -1:
+                i = self.i % self.epoch_size
+                ins_list = []
+                labs_list = []
+                if (i == 0):
+                    np.random.shuffle(self.indices)
+                for k in self.indices[self.batchsize * i: (i * self.batchsize) + self.batchsize]:
+                    # rgb = Image.open(join(self.rgb_dir, self.name_list[k]))
+                    lab = Image.open(join(self.lab_dir, self.name_list[k]))
+                    depth = Image.open(join(self.depth_dir, self.name_list[k]))
+                    # alt = Image.open(join(self.alt_dir, self.name_list[k]))
+                    # rgb_array = np.asarray(rgb)
+                    lab_array = np.asarray(lab)
+                    # maxlabs = self.city_model.prop_dict['num_labs'] * np.ones_like(lab_array)
+                    lab_array = np.eye(self.city_model.prop_dict['num_labs'] + 1)[lab_array]
+                    labs_list.append(lab_array)
+                    depth_array = np.asarray(depth)
+                    depth_array = np.expand_dims(depth_array, axis=2)
+                    # alt_array = np.asarray(alt)
+                    # alt_array = np.expand_dims(alt_array, axis=2)
+                    ins_list.append(depth_array)
+                self.i += 1
+                yield (np.asarray(ins_list), np.asarray(labs_list))
+
+        elif constraints.get('rgb_only'):
+            while self.i > -1:
+                i = self.i % self.epoch_size
+                ins_list = []
+                labs_list = []
+                if (i == 0):
+                    np.random.shuffle(self.indices)
+                for k in self.indices[self.batchsize * i: (i * self.batchsize) + self.batchsize]:
+                    rgb = Image.open(join(self.rgb_dir, self.name_list[k]))
+                    lab = Image.open(join(self.lab_dir, self.name_list[k]))
+                    # depth = Image.open(join(self.depth_dir, self.name_list[k]))
+                    # alt = Image.open(join(self.alt_dir, self.name_list[k]))
+                    rgb_array = np.asarray(rgb)
+                    lab_array = np.asarray(lab)
+                    # maxlabs = self.city_model.prop_dict['num_labs'] * np.ones_like(lab_array)
+                    lab_array = np.eye(self.city_model.prop_dict['num_labs'] + 1)[lab_array]
+                    labs_list.append(lab_array)
+                    # depth_array = np.asarray(depth)
+                    # depth_array = np.expand_dims(depth_array, axis=2)
+                    # alt_array = np.asarray(alt)
+                    # alt_array = np.expand_dims(alt_array, axis=2)
+                    ins_list.append(rgb_array)
+                self.i += 1
+                yield (np.asarray(ins_list), np.asarray(labs_list))
+
+        elif constraints.get('no_rgb'):
+            while self.i > -1:
+                i = self.i % self.epoch_size
+                ins_list = []
+                labs_list = []
+                if (i == 0):
+                    np.random.shuffle(self.indices)
+                for k in self.indices[self.batchsize * i: (i * self.batchsize) + self.batchsize]:
+                    # rgb = Image.open(join(self.rgb_dir, self.name_list[k]))
+                    lab = Image.open(join(self.lab_dir, self.name_list[k]))
+                    depth = Image.open(join(self.depth_dir, self.name_list[k]))
+                    alt = Image.open(join(self.alt_dir, self.name_list[k]))
+                    # rgb_array = np.asarray(rgb)
+                    lab_array = np.asarray(lab)
+                    # maxlabs = self.city_model.prop_dict['num_labs'] * np.ones_like(lab_array)
+                    lab_array = np.eye(self.city_model.prop_dict['num_labs'] + 1)[lab_array]
+                    labs_list.append(lab_array)
+                    depth_array = np.asarray(depth)
+                    depth_array = np.expand_dims(depth_array, axis=2)
+                    alt_array = np.asarray(alt)
+                    alt_array = np.expand_dims(alt_array, axis=2)
+                    ins_list.append(np.concatenate((depth_array,alt_array),axis=-1))
+                self.i += 1
+                yield (np.asarray(ins_list), np.asarray(labs_list))
+
+        else:
+            while self.i > -1:
+                i = self.i % self.epoch_size
+                ins_list = []
+                labs_list = []
+                if (i == 0):
+                    np.random.shuffle(self.indices)
+                for k in self.indices[self.batchsize * i: (i * self.batchsize) + self.batchsize]:
+                    rgb = Image.open(join(self.rgb_dir,self.name_list[k]))
+                    lab = Image.open(join(self.lab_dir,self.name_list[k]))
+                    depth = Image.open(join(self.depth_dir, self.name_list[k]))
+                    alt = Image.open(join(self.alt_dir,self.name_list[k]))
+                    rgb_array = np.asarray(rgb)
+                    lab_array = np.asarray(lab)
+                    # maxlabs = self.city_model.prop_dict['num_labs'] * np.ones_like(lab_array)
+                    lab_array = np.eye(self.city_model.prop_dict['num_labs']+1)[lab_array]
+                    labs_list.append(lab_array)
+                    depth_array = np.asarray(depth)
+                    depth_array = np.expand_dims(depth_array,axis=2)
+                    alt_array = np.asarray(alt)
+                    alt_array = np.expand_dims(alt_array,axis=2)
+                    ins_list.append(np.concatenate((rgb_array,depth_array,alt_array),axis=-1))
+                self.i += 1
+                yield (np.asarray(ins_list), np.asarray(labs_list))

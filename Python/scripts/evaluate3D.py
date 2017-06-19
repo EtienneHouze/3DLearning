@@ -18,10 +18,12 @@ from os.path import join, isfile, isdir
 from os import mkdir
 
 import time
-
+from helpers.visualization import convert_labelled_output
 from helpers.preprocess import dir_size
 from helpers.BatchGenerator import BatchGenerator
 from src.CityScapeModel import CityScapeModel
+import numpy as np
+from PIL import Image
 import sys
 
 def main():
@@ -35,7 +37,6 @@ def main():
 
     all_metrics = False
 
-    # TODO : trouver comment mettre en place la visualisation
     visu_folder = None
 
     for o,a in opts:
@@ -54,6 +55,10 @@ def main():
 
     if not isdir(output_folder):
         mkdir(output_folder)
+    if visu_folder :
+        if not isdir(visu_folder):
+            mkdir(visu_folder)
+
 
     if all_metrics:
         mets = ['acc','iou']
@@ -62,11 +67,12 @@ def main():
         model.define_metrics(*mets)
 
     testdirsize = dir_size(join(validation_folder,'RGB'))
-    test_gen = BatchGenerator(traindir=validation_folder,
+    test_gen = BatchGenerator(city_model=model,
+                              traindir=validation_folder,
                               traindirsize=testdirsize,
                               trainsetsize=testdirsize,
                               batchsize=1)
-    gen = test_gen.generate_batch_for_3D()
+    gen = test_gen.generate_batch_for_3D(model.prop_dict['constraints'])
     counter = 0
 
     model.compile()
@@ -84,6 +90,14 @@ def main():
                 line[model.prop_dict['metrics'][i-1]] = values[i]
             print(line)
             out_dict_list.append(line)
+            if visu_folder:
+                im_name = test_gen.name_list[counter]
+                y_pred = model.model.predict_on_batch(x_test)
+                y_pred = np.argmax(y_pred, axis=-1)
+                y_pred = y_pred.astype(dtype='uint8')
+                y_pred = np.squeeze(y_pred)
+                out_image = Image.fromarray(y_pred)
+                out_image.save(join(visu_folder,im_name))
             counter += 1
         else:
             break
@@ -100,8 +114,6 @@ def main():
         writer = csv.DictWriter(f, means.keys())
         writer.writeheader()
         writer.writerow(means)
-
-    # if visu_folder:
 
 
 
