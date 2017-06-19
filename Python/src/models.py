@@ -1191,6 +1191,7 @@ def upscaled_with_skips(input_shape, num_classes):
             activation='relu',
             name = 'net_conv1'
             )(a)
+    a = Dropout(rate=0.1)(a)
     b = Conv2D(
             filters=64,
             kernel_size=(3,3),
@@ -1224,6 +1225,7 @@ def upscaled_with_skips(input_shape, num_classes):
             activation='relu',
             name='net_conv4'
     )(c)
+    d = Dropout(rate=0.1)(d)
     e = Conv2D(
             filters=128,
             kernel_size=(3, 3),
@@ -1257,6 +1259,7 @@ def upscaled_with_skips(input_shape, num_classes):
             activation='relu',
             name='net_conv7'
     )(f)
+    g = Dropout(rate=0.1)(g)
     h = Conv2D(
             filters=256,
             kernel_size=(3, 3),
@@ -1287,12 +1290,11 @@ def upscaled_with_skips(input_shape, num_classes):
     return mod
 
 def upscaled_with_skips_aggreg(input_shape, num_classes):
-
     ins = Input(shape=input_shape,
                 name='net_inputs')
     a = Conv2D(
             filters=16,
-            kernel_size=(3,3),
+            kernel_size=(3, 3),
             kernel_initializer=random_uniform(),
             use_bias=True,
             bias_initializer=zeros(),
@@ -1300,40 +1302,41 @@ def upscaled_with_skips_aggreg(input_shape, num_classes):
             dilation_rate=1,
             activation='relu',
             name='net_conv0'
-            )(ins)
+    )(ins)
     a = Conv2D(
             filters=32,
-            kernel_size=(3,3),
+            kernel_size=(3, 3),
             kernel_initializer=random_uniform(),
             use_bias=True,
             bias_initializer=zeros(),
             padding='same',
             dilation_rate=1,
             activation='relu',
-            name = 'net_conv1'
-            )(a)
+            name='net_conv1'
+    )(a)
+    a = Dropout(rate=0.1)(a)
     b = Conv2D(
             filters=64,
-            kernel_size=(3,3),
+            kernel_size=(3, 3),
             kernel_initializer=random_uniform(),
             use_bias=True,
             bias_initializer=zeros(),
             padding='same',
             dilation_rate=2,
             activation='relu',
-            name = 'net_conv2'
-            )(a)
+            name='net_conv2'
+    )(a)
     c = Conv2D(
             filters=64,
-            kernel_size=(3,3),
+            kernel_size=(3, 3),
             kernel_initializer=random_uniform(),
             use_bias=True,
             bias_initializer=zeros(),
             padding='same',
             dilation_rate=2,
             activation='relu',
-            name = 'net_conv3'
-            )(b)
+            name='net_conv3'
+    )(b)
     d = Conv2D(
             filters=128,
             kernel_size=(3, 3),
@@ -1345,6 +1348,7 @@ def upscaled_with_skips_aggreg(input_shape, num_classes):
             activation='relu',
             name='net_conv4'
     )(c)
+    d = Dropout(rate=0.1)(d)
     e = Conv2D(
             filters=128,
             kernel_size=(3, 3),
@@ -1378,6 +1382,7 @@ def upscaled_with_skips_aggreg(input_shape, num_classes):
             activation='relu',
             name='net_conv7'
     )(f)
+    g = Dropout(rate=0.1)(g)
     h = Conv2D(
             filters=256,
             kernel_size=(3, 3),
@@ -1389,7 +1394,7 @@ def upscaled_with_skips_aggreg(input_shape, num_classes):
             activation='relu',
             name='net_conv8'
     )(g)
-    i = Concatenate(name='Fusion')([b,d,f,h])
+    i = Concatenate(name='Fusion')([b, d, f, h])
     i = Conv2D(
             filters=num_classes,
             kernel_size=1,
@@ -1397,7 +1402,7 @@ def upscaled_with_skips_aggreg(input_shape, num_classes):
             use_bias=False,
             activation='softmax',
             padding='same',
-            name = 'net_out'
+            name='net_out'
     )(i)
 
     b = Conv2D(
@@ -1409,6 +1414,7 @@ def upscaled_with_skips_aggreg(input_shape, num_classes):
             padding='same',
             name='aggreg_1'
     )(i)
+    b = Dropout(rate=0.1)(b)
     b = Conv2D(
             filters=num_classes,
             kernel_size=3,
@@ -1449,6 +1455,7 @@ def upscaled_with_skips_aggreg(input_shape, num_classes):
             padding='same',
             name='aggreg_5'
     )(b)
+    b = Dropout(rate=0.1)(b)
     b = Conv2D(
             filters=num_classes,
             kernel_size=3,
