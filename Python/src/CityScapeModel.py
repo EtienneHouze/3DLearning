@@ -393,7 +393,7 @@ class CityScapeModel:
                                      batchsize=batch_size,
                                      traindirsize=dir_size(os.path.join(self.prop_dict['valset'][1],'RGB')))
             self.model.fit_generator(generator=batch_gen.generate_batch_for_3D(),
-                                     steps_per_epoch=batch_gen.epoch_size//10,
+                                     steps_per_epoch=batch_gen.epoch_size,
                                      epochs=epochs*10,
                                      verbose=2,
                                      callbacks=call_list,
@@ -402,7 +402,7 @@ class CityScapeModel:
                                      )
         else:
             self.model.fit_generator(generator=batch_gen.generate_batch_for_3D(),
-                                     steps_per_epoch=batch_gen.epoch_size//10,
+                                     steps_per_epoch=batch_gen.epoch_size,
                                      epochs=epochs*10,
                                      verbose=2,
                                      callbacks=call_list
