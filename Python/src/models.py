@@ -270,6 +270,7 @@ def upscaled_without_aggreg(input_shape, num_classes):
             activation='relu',
             name='net_conv0'
             )(ins)
+    a = Dropout(rate=0.1)(a)
     a = Conv2D(
             filters=32,
             kernel_size=(3,3),
@@ -325,6 +326,7 @@ def upscaled_without_aggreg(input_shape, num_classes):
             activation='relu',
             name='net_conv5'
     )(a)
+    a = Dropout(rate=0.1)(a)
     a = Conv2D(
             filters=128,
             kernel_size=(3, 3),
@@ -347,6 +349,7 @@ def upscaled_without_aggreg(input_shape, num_classes):
             activation='relu',
             name='net_conv7'
     )(a)
+    a = Dropout(rate=0.1)(a)
     a = Conv2D(
             filters=256,
             kernel_size=(3, 3),
@@ -389,6 +392,7 @@ def upscaled_with_aggreg(input_shape, num_classes):
             activation='relu',
             name='net_conv0'
     )(ins)
+    a = Dropout(rate=0.1)(a)
     a = Conv2D(
             filters=32,
             kernel_size=(3, 3),
@@ -444,6 +448,7 @@ def upscaled_with_aggreg(input_shape, num_classes):
             activation='relu',
             name='net_conv5'
     )(a)
+    a = Dropout(rate=0.1)(a)
     a = Conv2D(
             filters=128,
             kernel_size=(3, 3),
@@ -466,6 +471,7 @@ def upscaled_with_aggreg(input_shape, num_classes):
             activation='relu',
             name='net_conv7'
     )(a)
+    a = Dropout(rate=0.1)(a)
     a = Conv2D(
             filters=256,
             kernel_size=(3, 3),
@@ -477,7 +483,7 @@ def upscaled_with_aggreg(input_shape, num_classes):
             activation='relu',
             name='net_conv8'
     )(a)
-    a = Conv2D(
+    b = Conv2D(
             filters=num_classes,
             kernel_size=1,
             kernel_initializer=random_uniform(),
@@ -487,15 +493,7 @@ def upscaled_with_aggreg(input_shape, num_classes):
             name='net_out'
     )(a)
 
-    b = Conv2D(
-            filters=num_classes,
-            kernel_size=3,
-            use_bias=False,
-            kernel_initializer=random_uniform(),
-            activation='relu',
-            padding='same',
-            name='aggreg_0'
-    )(a)
+
     b = Conv2D(
             filters=num_classes,
             kernel_size=3,
@@ -505,6 +503,7 @@ def upscaled_with_aggreg(input_shape, num_classes):
             padding='same',
             name='aggreg_1'
     )(b)
+    b= Dropout(rate=0.1)(b)
     b = Conv2D(
             filters=num_classes,
             kernel_size=3,
@@ -545,6 +544,7 @@ def upscaled_with_aggreg(input_shape, num_classes):
             padding='same',
             name='aggreg_5'
     )(b)
+    b = Dropout(rate=0.1)(b)
     b = Conv2D(
             filters=num_classes,
             kernel_size=3,
