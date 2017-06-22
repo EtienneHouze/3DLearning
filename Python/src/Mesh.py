@@ -123,7 +123,17 @@ class Mesh:
                     self.verts.append(Point(*splt))
             self.numpoints = len(self.verts)
 
-    def save_to_ptx(self, file, label_file):
+    def save_to_ptx(self, file, label_file, write_labels = False):
+        """
+        Exporte le mesh au format ptx avec les
+        Args:
+            file (string): nom du fichier à écrire
+            label_file (string): fichier donnant la correspondance étiquettes/couleurs
+            write_labels (bool) : Si l'on écrit les étiquette dans le ptx ou non
+
+        Returns:
+
+        """
         labels_dict = {0:[0, 0, 0]}
         with fileinput.input((label_file)) as f:
             for line in f:
@@ -141,10 +151,27 @@ class Mesh:
             header = "1"+"\n"+str(len(self.verts))+"\n"+"0 0 0\n"+"1 0 0\n"+"0 1 0\n"+"0 0 1\n"+"1 0 0 0\n"+"0 1 0 0\n"+"0 0 1 0\n"+"0 0 0 1\n"
             f.write(header)
             for vert in self.verts:
-                line = str(vert.x)+" "+str(vert.y)+" "+str(vert.z)+" 0 "
-                for i in labels_dict[vert.label]:
-                    line += (str(i)+" ")
-                line += (str(vert.label)+"\n")
+                if write_labels:
+                    line = str(vert.x)+" "+str(vert.y)+" "+str(vert.z)+" 0 "
+                    for i in labels_dict[vert.label]:
+                        line += (str(i)+" ")
+                    line += (str(vert.label)+"\n")
+                else :
+                    line = str(vert.x)+" "+str(vert.y)+" "+str(vert.z)+" 0"
+                    for i in labels_dict[vert.label]:
+                        line += (" " + str(i))
+                    line += "\n"
                 f.write(line)
 
+def Mesh_IoU(mesh_true, mesh_pred):
+    """
+    Calcule la distance IoU entre deux meshes étiquetés.
+    Args:
+        mesh_true (Mesh): mesh étiquté avec les labels exacts
+        mesh_pred (Mesh): mesh étiquetés avec les prédictions
+
+    Returns:
+        La mesure IoU entre les deux Meshes.
+    """
+#     TODO : écrire cette méthode...
 
