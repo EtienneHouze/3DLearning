@@ -6,7 +6,7 @@ Syntaxe :
         folder_path : directory where the model will be saved.
         training folder : folder containg training data
         num_classes : number of classes
-        [optional] valideation_folder : Dossier contenant les données de validation
+        [optional] validation_folder : Dossier contenant les données de validation
 
 Options :
     -h ou --help : affiche l'aide
@@ -14,10 +14,10 @@ Options :
     -f ou --freeze <nom> : gèle les layers contenant le nom spécifié pour la phase d'apprentissage.
     -e ou --epochs <nombre> : spécifie le nombre d'epochs, 30 par défaut
     -b ou --batch <nombre> : spécifie la taille d'un batch, 5 par défaut
-    -d ou --decay <valeur> : spécifie un taux de diminution du learning rate, aucun par défault.
+    -d ou --decay <valeur> : spécifie un taux de diminution du learning rate, aucun par défault. Ce décroissance sera appliquée toutes les 10 epochs lors de l'entrainenemt.
     -r ou --rate <taux> : définit le taux d'apprentissage spécifié. Par défaut à 1e-4
-    -h ou --height <hauteur> : définit la hauteur des images.
-    -w ou --width <largeur> : définit la largeur des images.
+    -h ou --height <hauteur> : définit la hauteur des images. Par défaut, à 256
+    -w ou --width <largeur> : définit la largeur des images. Par défaut, à 256
     --rgb_only : n'utilise que le rgb
     --z_only : n'utilise que le z
     --depth_only : n'utilise que la profondeur
@@ -134,9 +134,9 @@ def main():
 
 
     model.add_callback('view_output_3D',
-                       batch_interval=10,
+                       batch_interval=500,
                        on_epoch=False,
-                       num_ins=5)
+                       num_ins=1)
 
     model.add_callback(
             'history_loss',

@@ -1,3 +1,7 @@
+"""
+    Ce fichier comprend les méthodes de constructions des différents réseaux de neurones utilisés lors de ce stage.  Les réseaux disponibles sont tous listés dans le dictionnaire situé à la  toute fin de ce fichier. S'y référer lors de la construction d'un modèle, et ne pas oublier de le mettre à jour lors de l'ajout d'une nouvelle méthode constructrice !
+"""
+
 from __future__ import absolute_import,print_function,division
 
 from keras.initializers import random_uniform, zeros
@@ -11,9 +15,7 @@ import tensorflow as tf
 
 from src.Layers import Inception, InceptionPooling, InceptionConcat, UpscalingLayer, UpscalingBicubic
 
-"""
-    This script contains all the builder functions used to build the keras models for 
-"""
+
 
 
 # <editor-fold desc="Définition des fonctions de construction de modèles">

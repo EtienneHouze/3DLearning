@@ -64,6 +64,15 @@ target_link_libraries(TextureRender
 	"${CMAKE_CURRENT_SOURCE_DIR}/3rd_Party/FreeGLUT/lib/x64/freeglut.lib"
 	)
 
+add_executable(LabelRender LabelRender.cpp ${SOURCES})
+target_link_libraries(LabelRender
+	${OpenCV_LIBS} 
+	${CGAL_LIBRARIES} 
+	${OPENGL_LIBRARIES} 
+	"${CMAKE_CURRENT_SOURCE_DIR}/3rd_Party/GLEW/lib/Release/x64/glew32.lib"
+	"${CMAKE_CURRENT_SOURCE_DIR}/3rd_Party/FreeGLUT/lib/x64/freeglut.lib"
+	)
+
  SET(DLLs 
 	"${OpenCV_DIR}/x64/vc14/bin/opencv_world320.dll" 
 	"${CMAKE_CURRENT_SOURCE_DIR}/3rd_Party/FreeGLUT/bin/x64/freeglut.dll" 

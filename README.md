@@ -24,4 +24,8 @@ Sont aussi requis les packages numpy, pandas, pillow, cython
 6. Dans chaque, on crée les dossiers "Altitude", "Depth", "RGB", "RGB_labs" ainsi que le fichier projections.txt correspondants.
 7. On utilise le script Python image_preprocess afin de crée un dossier "Labels" correspondant aux étiquettes.
 
+**Attention : Il est impératif que le dossier d'apprentissage, comme le dossier de validation, comprenne les sous-répertoires suivants : RGB, Labels, Depth, Altitude, ainsi qu'un fichier txt comprenant la correspondane couleur/label et le fichier Projections.txt**
+
 ### Apprentissage sur le dataset d'images
+
+- Le script permettant d'entrainer un réseau de neurone est scripts/training3D.py. Se référer à la documentation attachée à ce script pour son utilisation.
