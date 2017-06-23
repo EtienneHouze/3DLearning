@@ -2714,12 +2714,16 @@ def upscaled_with_skips_and_meta__pool_dropout_aggreg(input_shape, num_classes):
 # </editor-fold>
 
 # A dictionnary linking model builder names to the actual functions.
+
 models_dict = {
     'simple_model': simple_model,
     'up': upscaled,
     'up_mini': upscaled_truncated,
+    # A tester : upscale simple, sans skips ni meta.
     'up_without': upscaled_without_aggreg,
     'up_with': upscaled_with_aggreg,
+
+    # <editor-fold desc="Obsolete : tests de modeles ratés">
     'up_with_deeper_aggreg': upscaled_with_deeper_aggreg,
     'test_inception': test_inception,
     'inception_with': inception_with_deeper_aggreg,
@@ -2728,11 +2732,17 @@ models_dict = {
     'unpooling': unpooling_4times,
     'test_inception_pooling':test_inception_with_pooling,
     'inception_pooling': inception_with_pooling,
-    'upscale_skips': upscaled_with_skips,
     'upscale_skips_meta': upscaled_with_skips_and_meta,
+    # </editor-fold>
+    # Utiliser ces deux la : avec skips et sans meta
+    'upscale_skips': upscaled_with_skips,
     'up_skips_aggreg':upscaled_with_skips_aggreg,
+    # <editor-fold desc="Obsolètes : pas de dropout">
+    # Les deux suivantes sont obsoloetes : pas de dropout
     'up_skips_meta_pool': upscaled_with_skips_and_meta__pool_aggreg,
     'up_skips_meta_pool_aggreg': upscaled_with_skips_and_meta__pool_aggreg,
+    # </editor-fold>
+    # Utiliser les deux suivantes
     'up_skips_meta_pool_drop': upscaled_with_skips_and_meta_pool_dropout,
     'up_skips_meta_pool_drop_aggreg': upscaled_with_skips_and_meta__pool_dropout_aggreg
 }
