@@ -11,6 +11,7 @@ Options :
 """
 # FIXME : pour le momennt, la valeur seuil fait planter la suite du programme car elle ne met pas a jour le fichier de projections des points sur les images...
 # Fonction de M...
+# TODO : prendre son courage a deux mains et essayer de parser le magnifique fichier ascii de plusieurs Go et lui enlever toutes les références aux images que l'on a supprimé... Yeay !
 
 from __future__ import absolute_import, division, print_function
 
@@ -57,7 +58,7 @@ def main():
         if o in ['--thresh']:
             thresh = float(a)
 
-    if len(args) != 3:
+    if len(args) != 1:
         print("try -h or --help")
         sys.exit(-1)
 
@@ -67,6 +68,7 @@ def main():
     lab_folder = join(data_root,'Labels')
     labels_file = join(data_root,'labels.txt')
     labels = []
+    removed_files = []
 
     with fileinput.input((labels_file)) as lab_file:
         for line in lab_file:
@@ -100,11 +102,13 @@ def main():
                     lab.save(join(lab_folder, file))
                     print("Image " + file + " processed.")
                 else :
+                    removed_files.append(file)
                     remove(join(rgb_folder,file))
                     remove(join(data_root,'Depth',file))
                     remove(join(data_root,'Altitude',file))
                     remove(join(rgb_lab_folder,file))
                     print("Image "+str(file)+" ramoved because not relevant enough.")
+    # with fileinput.input((join(data_root,'Projections.txt'))) as f:
 
 
 if __name__ == "__main__":

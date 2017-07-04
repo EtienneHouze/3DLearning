@@ -97,9 +97,10 @@ int main(int argc, char** argv) {
 	}
 
 	std::vector<std::vector<std::pair<int, cv::Point2d>>> projections;
+	std::vector<std::vector<double>> positions;
 
 	PointProjector pp;
-	pp.computeAndSaveAllProjections(std::vector<Point_3>(P.points_begin(), P.points_end()), cameras, visibility, folder + "/Projections.txt", projections);
+	pp.computeAndSaveAllProjections(std::vector<Point_3>(P.points_begin(), P.points_end()), cameras, visibility, folder + "/Projections.txt", projections,positions);
 
 	std::cout << "Reprojected all points in all images: " << P.size_of_vertices() * cameras.size() << " projections in " << omp_get_wtime() - time << " seconds." << std::endl;
 	std::cout << "Saved results in " << folder + "/Projections.txt file." << std::endl;

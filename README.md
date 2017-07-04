@@ -29,3 +29,6 @@ Sont aussi requis les packages numpy, pandas, pillow, cython
 ### Apprentissage sur le dataset d'images
 
 - Le script permettant d'entrainer un réseau de neurone est scripts/training3D.py. Se référer à la documentation attachée à ce script pour son utilisation.
+- A l'issue de ce script, le modèle du réseau sera créé puis sauvegardé dans le répertoire mentionné au script précédent. On pourra alors soit continuer l'entrainenement, en chargeant les poids, ou alors l'évaluer, avec le scripts evaluate3D.py
+- Enfin, on peut directement l'utiliser sur un set d'images afin de les étiqueter. On utilisera pour ceci le script "inférence3D.py"
+-
