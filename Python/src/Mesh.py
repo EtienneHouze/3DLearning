@@ -193,5 +193,35 @@ def Mesh_IoU(mesh_true, mesh_pred):
     Returns:
         La mesure IoU entre les deux Meshes.
     """
+    verts_pred = mesh_pred.verts
+    verts_true = mesh_true.verts
+    if len(verts_pred)!=len(verts_true):
+        raise Exception("Les deux meshes n'ont pas le meme nombre de sommet !")
+    else:
+        num_labs = max(verts_true,key=lambda v:v.label)
+        num_labs = num_labs.label+1
+        TP = [0] * num_labs
+        TN = [0] * num_labs
+        FP = [0] * num_labs
+        FN = [0] * num_labs
+        for i in range(len(verts_true)):
+            y_true = verts_true[i].label
+            y_pred = verts_pred[i].label
+            for lab in range(num_labs):
+                if y_true==y_pred and y_true==lab:
+                    TP[lab] += 1
+                if y_true==lab and y_pred != y_pred:
+                    FN[lab] += 1
+                if y_true!=lab and y_pred!=lab:
+                    TN[lab] += 1
+                if y_true!=lab and y_pred==lab:
+                    FP[lab] += 1
+            print("point " + str(i))
+        iou = [0] * num_labs
+        for i in range(num_labs):
+            iou[i] = TP[i] / (TP[i] + FN[i] + FP[i])
+        print(iou)
+        print(np.mean(iou))
+        return iou, np.mean(iou)
 
 #     TODO : écrire cette méthode...

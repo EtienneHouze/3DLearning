@@ -17,6 +17,7 @@ int main(int argc, char** argv) {
 	std::string xmlFile = "";
 	std::string meshFile = "";
 	std::string shaderFolder = "shaders";
+	std::string folder = "./Result/RGB";
 	std::cout << "\n";
 	for (int i = 0; i < argc; i++) {
 
@@ -25,6 +26,7 @@ int main(int argc, char** argv) {
 
 			std::cout << "-X [path] : Specify the path to the XML file with camera information (REQUIRED)\n";
 			std::cout << "-M [path] : Specify the path to the OBJ mesh (OPTIONAL)\n";
+			std::cout << "-F [path] : Specify thpath to the output (OPTIONAL)\n";
 			std::cout << "--help : Print command-line options.\n\n";
 
 			std::cout << "All results will be stored in a Results folder next to the executable.\n";
@@ -38,6 +40,9 @@ int main(int argc, char** argv) {
 		}
 		if (std::strcmp(argv[i], "-X") == 0) {
 			xmlFile = argv[i + 1];
+		}
+		if (std::strcmp( argv[i], "-F" ) == 0) {
+			folder = argv[i + 1];
 		}
 	}
 
@@ -57,7 +62,6 @@ int main(int argc, char** argv) {
 	}
 
 	double time = omp_get_wtime();
-	std::string folder = "./Result/RGB";
 
 	boost::filesystem::path Dir(folder);
 	boost::filesystem::create_directories(Dir);
